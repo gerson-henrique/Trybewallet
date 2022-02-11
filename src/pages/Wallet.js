@@ -45,7 +45,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const { email, currencies, expend } = this.props;
     const {
       value,
       description,
@@ -141,7 +141,6 @@ class Wallet extends React.Component {
             type="button"
             onClick={ this.saveExpendState }
           >
-            { /* implementar API RQ4 */ }
             Adicionar despesas
           </button>
         </div>
@@ -160,6 +159,23 @@ class Wallet extends React.Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
+          <tbody>
+            {expend && (
+              expend.map((data) => (
+                <tr key={ data.id }>
+                  <td>{data.description}</td>
+                  <td>{data.tag}</td>
+                  <td>{data.method}</td>
+                  <td>{parseFloat(data.value).toFixed(2)}</td>
+                  <td>{data.exchangeRates[data.currency].name}</td>
+                  <td>{parseFloat(data.exchangeRates[data.currency].ask).toFixed(2)}</td>
+                  <td>
+                    {(data.value * data.exchangeRates[data.currency].ask).toFixed(2)}
+                  </td>
+                  <td> Real</td>
+                </tr>))
+            )}
+          </tbody>
         </table>
 
       </div>
